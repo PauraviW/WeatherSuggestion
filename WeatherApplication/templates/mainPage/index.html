@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+<script type="text/javascript">
+
+
+</script>
+{%endblock%}
+
+{% block content %}
+
+<div class="container ">
+    <div class="container  ">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-left panel-title">Your Details Please
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="col-lg-12">
+                            <div>Please enter your current location and the maximum
+                                distance that you wish to travel
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form" method="post">
+                                        <div class="form-row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="latitude">Your Latitude:</label>
+                                                    <input name='latitude' type="number" class="form-control"
+                                                           id="latitude" step="any"
+                                                           required>
+                                                </div>
+                                                <!--                                                <div class="form-group ">-->
+                                                <!--                                                    <label for="states">State:</label>-->
+                                                <!--                                                    <select class="form-control" name="states" id="states" required>-->
+                                                <!--                                                        <option disabled selected value> &#45;&#45; select an option &#45;&#45;</option>-->
+                                                <!--                                                        <option value="AL">Alabama</option>-->
+                                                <!--                                                        <option value="AK">Alaska</option>-->
+                                                <!--                                                        <option value="AZ">Arizona</option>-->
+                                                <!--                                                        <option value="AR">Arkansas</option>-->
+                                                <!--                                                        <option value="CA">California</option>-->
+                                                <!--                                                        <option value="CO">Colorado</option>-->
+                                                <!--                                                        <option value="CT">Connecticut</option>-->
+                                                <!--                                                        <option value="DE">Delaware</option>-->
+                                                <!--                                                        <option value="DC">District Of Columbia</option>-->
+                                                <!--                                                        <option value="FL">Florida</option>-->
+                                                <!--                                                        <option value="GA">Georgia</option>-->
+                                                <!--                                                        <option value="HI">Hawaii</option>-->
+                                                <!--                                                        <option value="ID">Idaho</option>-->
+                                                <!--                                                        <option value="IL">Illinois</option>-->
+                                                <!--                                                        <option value="IN">Indiana</option>-->
+                                                <!--                                                        <option value="IA">Iowa</option>-->
+                                                <!--                                                        <option value="KS">Kansas</option>-->
+                                                <!--                                                        <option value="KY">Kentucky</option>-->
+                                                <!--                                                        <option value="LA">Louisiana</option>-->
+                                                <!--                                                        <option value="ME">Maine</option>-->
+                                                <!--                                                        <option value="MD">Maryland</option>-->
+                                                <!--                                                        <option value="MA">Massachusetts</option>-->
+                                                <!--                                                        <option value="MI">Michigan</option>-->
+                                                <!--                                                        <option value="MN">Minnesota</option>-->
+                                                <!--                                                        <option value="MS">Mississippi</option>-->
+                                                <!--                                                        <option value="MO">Missouri</option>-->
+                                                <!--                                                        <option value="MT">Montana</option>-->
+                                                <!--                                                        <option value="NE">Nebraska</option>-->
+                                                <!--                                                        <option value="NV">Nevada</option>-->
+                                                <!--                                                        <option value="NH">New Hampshire</option>-->
+                                                <!--                                                        <option value="NJ">New Jersey</option>-->
+                                                <!--                                                        <option value="NM">New Mexico</option>-->
+                                                <!--                                                        <option value="NY">New York</option>-->
+                                                <!--                                                        <option value="NC">North Carolina</option>-->
+                                                <!--                                                        <option value="ND">North Dakota</option>-->
+                                                <!--                                                        <option value="OH">Ohio</option>-->
+                                                <!--                                                        <option value="OK">Oklahoma</option>-->
+                                                <!--                                                        <option value="OR">Oregon</option>-->
+                                                <!--                                                        <option value="PA">Pennsylvania</option>-->
+                                                <!--                                                        <option value="RI">Rhode Island</option>-->
+                                                <!--                                                        <option value="SC">South Carolina</option>-->
+                                                <!--                                                        <option value="SD">South Dakota</option>-->
+                                                <!--                                                        <option value="TN">Tennessee</option>-->
+                                                <!--                                                        <option value="TX">Texas</option>-->
+                                                <!--                                                        <option value="UT">Utah</option>-->
+                                                <!--                                                        <option value="VT">Vermont</option>-->
+                                                <!--                                                        <option value="VA">Virginia</option>-->
+                                                <!--                                                        <option value="WA">Washington</option>-->
+                                                <!--                                                        <option value="WV">West Virginia</option>-->
+                                                <!--                                                        <option value="WI">Wisconsin</option>-->
+                                                <!--                                                        <option value="WY">Wyoming</option>-->
+                                                <!--                                                    </select>-->
+                                                <!--                                                </div>-->
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="longitude">Your Longitude:</label>
+                                                    <input name='longitude' type="number" class="form-control"
+                                                           id="longitude" step="any"
+                                                           required>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group ">
+                                                    <label for="radius">Within Miles:</label>
+                                                    <input name='radius' type="number" class="form-control" id="radius"
+                                                           min="0.0"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="weatherv">Your Favourite Weather:</label>
+                                                    <select class="form-control" name="weatherv" id="weatherv" required>
+                                                        <option disabled selected value> -- select an option --</option>
+                                                        <option value="Thunderstorm">Thunderstorm</option>
+                                                        <option value="Drizzle">Drizzle</option>
+                                                        <option value="Rain">Rain</option>
+                                                        <option value="Snow">Snow</option>
+                                                        <option value="Mist">Mist</option>
+                                                        <option value="Clear">Clear</option>
+                                                        <option value="Clouds">Clouds</option>
+                                                        <option value="Any">Any weather is fine!</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class='col-lg-4'>
+                                                <div class="form-group">
+
+                                                    <label for="date"
+                                                           class="col-form-label">Date (Within the next 7 days)</label>
+                                                    <div>
+                                                        <input class="form-control" type="date" value='{{todays_date}}'
+                                                               name="date" id="date">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row col-lg-4 ">
+                                            <label for="search"
+                                                   class="col-form-label" style="min-height: 15px"></label>
+                                            <div class="form-group  text-center">
+
+                                                <button type="submit" id='search' class="btn btn-primary">Let's find the
+                                                    best park for you!
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if userData | length > 0 %}
+                        <div class="col-lg-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading panel-title text-left">Your Preferences</div>
+
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Latitude</th>
+                                        <th scope="col">Longitude</th>
+                                        <th scope="col">Within Miles</th>
+                                        <th scope="col">Favourite Weather</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{userData['latitude']}}</td>
+                                        <td>{{userData['longitude']}}</td>
+                                        <td>{{userData['radius']}}</td>
+                                        <td>{{userData['favWeather']}}</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div id='main-content' class="row">
+
+                    <div class="col-lg-12">
+                        {% if locations| length >0 %}
+                        <div><h3>Your Results</h3></div>
+
+                        <div class="row">
+                            {% for i in range(locations| length) %}
+
+
+                            <div class="col-lg-4">
+                                <div class="park-card">
+                                    <div class="panel  panel-primary border-class" style="min-height: 450px;">
+                                        <div class="panel-heading text-left panel-title"><a
+                                                href="{{locations[i]['url']}}"
+                                                target="_blank" class="external">{{locations[i]['name']}}</a></div>
+                                        <div class="card-body card-body-class">
+
+                                            <div>
+                                                <h5 style="color: black; font-size: 15px"
+                                                    class="card-subtitle mb-2 text-muted">
+                                                    {{locations[i]['address']}}</h5>
+                                                <table class="table">
+
+                                                    <tbody>
+                                                    <tr>
+
+                                                        <td>Distance:</td>
+                                                        <td>{{locations[i]['distance']}}</td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>Weather:</td>
+                                                        <td>{{locations[i]['mainWeather']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Description:</td>
+                                                        <td>{{locations[i]['desc']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Temperature (Day and Night):</b></td>
+                                                        <td>{{locations[i]['temp_day']}} &#8457;</td>
+                                                        <td>{{locations[i]['temp_night']}} &#8457;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Feels Like (Day and Night):</b></td>
+                                                        <td>{{locations[i]['feels_day']}} &#8457;</td>
+                                                        <td>{{locations[i]['feels_night']}} &#8457;</td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        {% else %}
+                        {% if showMessage == True %}
+                        <div class="row"><h3 class="panel-heading">Your Results</h3></div>
+                        <h3 class="alert alert-info">
+                            Sorry! No park matches your criteria!
+                        </h3>
+                        {%endif%}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- Button trigger modal -->
+
+{% endblock %}
+
+
+

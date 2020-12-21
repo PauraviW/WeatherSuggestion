@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+{%extends "bootstrap/base.html" %}
+{% block title %}
+{{super()}}
+Park Suggestion System
+{% endblock %}
+{% block head%}
+{{super()}}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Park Suggestion System</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('static', filename='style.css')}}">
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+/*This is to remove the overlapping between the navbar and body*/
+body {
+    padding-top: 70px;
+}
+
+.park-card{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.border-class {
+
+    border-radius: 7px;
+    border: 1px solid #000000;
+}
+
+.card-body-class{
+    padding: 10px;
+}
+
+/*
+#e9ecef
+#337ab7
+*/

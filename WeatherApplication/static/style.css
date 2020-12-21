@@ -1,0 +1,37 @@
+/*This is to remove the overlapping between the navbar and body*/
+body {
+    padding-top: 100px;
+    background-color: #d4edda;
+}
+
+.page-title {
+    font-size: 30px !important;
+    padding-top: 30px;
+}
+
+
+a.external[target="_blank"]::after {
+    content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+    margin: 0px 3px 0px 5px;
+
+}
+
+.navbar {
+    height: 80px;
+}
+
+.park-card {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.border-class {
+
+    border-radius: 7px;
+    border: 1px solid #000000;
+}
+
+.card-body-class {
+    padding: 10px;
+}
+
