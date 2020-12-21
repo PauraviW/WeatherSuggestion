@@ -111,7 +111,7 @@ def find_best_park():
         probable_locations = []
         for park in parks:
             distance, within_range = check_if_within_range(latitude, longitude, radius, park['lat'], park['lng'])
-            park['distance'] = "About " + str(int(distance)) + ' miles'
+            park['distance'] = int(distance)
             if within_range:
                 probable_locations.append(park)
 
