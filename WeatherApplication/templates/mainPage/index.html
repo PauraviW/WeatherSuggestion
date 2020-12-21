@@ -2,13 +2,28 @@
 
 {% block scripts %}
 <script type="text/javascript">
-
+    function validateForm() {
+        var cansubmit = true;
+        latitude = document.getElementById('latitude').value;
+        longitude = document.getElementById('longitude').value;
+        withinMiles = document.getElementById('radius').value;
+        weather = document.getElementById('weatherv').value;
+        if (latitude == '' | longitude == '' | withinMiles == '' | weather == '') {
+            cansubmit = false
+        }
+        if (cansubmit) {
+            const loader = document.querySelector('.loader');
+            loader.classList.remove("hidden");
+        }
+    }
 
 </script>
 {%endblock%}
 
 {% block content %}
-
+<div class="loader hidden">
+    <img src="{{url_for('static', filename='loading.gif')}}" alt="loading...">
+</div>
 <div class="container ">
     <div class="container  ">
         <div class="row">
@@ -24,7 +39,7 @@
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form class="form" method="post">
+                                    <form name='userForm' class="form" method="post">
                                         <div class="form-row">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
@@ -77,7 +92,8 @@
                                                    class="col-form-label" style="min-height: 15px"></label>
                                             <div class="form-group  text-center">
 
-                                                <button type="submit" id='search' class="btn btn-primary">Let's find the
+                                                <button onclick="validateForm()" id='search' class="btn btn-primary">
+                                                    Let's find the
                                                     best park for you!
                                                 </button>
                                             </div>
@@ -167,14 +183,17 @@
                                                         <td>{{locations[i]['desc']}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td ><b>Temperature (Day and Night):</b></td>
+                                                        <td><b>Temperature (Day and Night):</b></td>
                                                         <td class="table-cell">{{locations[i]['temp_day']}} &#8457;</td>
-                                                        <td class="table-cell">{{locations[i]['temp_night']}} &#8457;</td>
+                                                        <td class="table-cell">{{locations[i]['temp_night']}} &#8457;
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>Feels Like (Day and Night):</b></td>
-                                                        <td class="table-cell">{{locations[i]['feels_day']}} &#8457;</td>
-                                                        <td class="table-cell">{{locations[i]['feels_night']}} &#8457;</td>
+                                                        <td class="table-cell">{{locations[i]['feels_day']}} &#8457;
+                                                        </td>
+                                                        <td class="table-cell">{{locations[i]['feels_night']}} &#8457;
+                                                        </td>
                                                     </tr>
 
                                                     </tbody>
@@ -196,7 +215,8 @@
 
                         {% else %}
                         {% if showMessage == True %}
-                        <div class="container row"><h3 class="panel-heading">Your Result</h3><h4>(Ranked according to the closest distance and with the weather that matches your needs!)</h4></div>
+                        <div class="container row"><h3 class="panel-heading">Your Result</h3><h4>(Ranked according to
+                            the closest distance and with the weather that matches your needs!)</h4></div>
                         <h3 class="alert alert-info">
                             Sorry! No park matches your criteria!
                         </h3>
