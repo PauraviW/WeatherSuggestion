@@ -1,17 +1,16 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, url_for, session)
-from werkzeug.exceptions import abort
-from geopy.geocoders import Nominatim
-import datetime as dt
+
 from datetime import date, datetime
 import requests
 import os
 import json
 from math import sin, cos, sqrt, atan2, radians
+import copy
 
-geolocator = Nominatim(user_agent="WeatherApplication")
+# important variables.
 api_key = '2c62ed2633df21a18d7700c436125852'
 open_weather_api_endpoint = 'http://api.openweathermap.org/data/2.5/onecall'
-param_dict = {'appid': api_key, 'lat': None, 'lon': None, 'units': 'imperial'}
+param_dict = {'appid': api_key, 'lat': None, 'lon': None, 'units': 'imperial', 'exclude':'minutely,hourly,current,alerts'}
 basedir = os.path.abspath(os.path.dirname(__file__))
 location_file_path = 'static/locations.json'
 bp = Blueprint('suggest', __name__)
@@ -23,7 +22,6 @@ def get_locations():
     Function to read the park details.
     :return: list of all the parks with details.
     '''
-
     data_file = os.path.join(basedir, location_file_path)
     with open(data_file, 'r') as f:
         locations = json.load(f)
@@ -31,6 +29,15 @@ def get_locations():
 
 
 def check_if_within_range(user_latitude, user_longitude, radius, park_latitude, park_longitude):
+    """
+    Method to check if distance between 2 places is within the range prescribed by the user
+    :param user_latitude: User location - latitude
+    :param user_longitude: User Location - longitude
+    :param radius: Maximum miles user can travel
+    :param park_latitude: Park Location - Latitude
+    :param park_longitude: Park Location - Longitude
+    :return: boolean - If a park is within the range specified by the user then return true else false.
+    """
     lat1 = radians(user_latitude)
     lon1 = radians(user_longitude)
     lat2 = radians(float(park_latitude))
@@ -52,11 +59,18 @@ def check_if_within_range(user_latitude, user_longitude, radius, park_latitude, 
 
 
 def get_request_data(request):
+    """
+    Method to obtain parameters from the request object
+    :param request: form filled with user preferences
+    :return: latitude, longitude - float
+            radius : maximum miles surrounding the park
+            weather : user's favourite weather
+            user_obj : A dictionary containing all the above mentioned features to be passed to the template.
+    """
     latitude = float(request.form['latitude'])
     longitude = float(request.form['longitude'])
     radius = float(request.form['radius'])
     weather = request.form['weatherv']
-    userDate = request.form['date']
 
     # construct user object
     user_obj = {}
@@ -64,13 +78,25 @@ def get_request_data(request):
     user_obj['longitude'] = longitude
     user_obj['radius'] = radius
     user_obj['favWeather'] = weather
-    return latitude, longitude, radius, weather, userDate, user_obj
+    return latitude, longitude, radius, weather, user_obj
 
 
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET'])
 def index():
+    """
+    Factory method that handles GET request on the first call and POST requests on click of the submit button
+    :return:
+    """
     showMessage = False
-    parks = []
+    return render_template('mainPage/index.html',  showMessage=showMessage)
+
+@bp.route('/', methods=['POST'])
+def find_best_park():
+    """
+    Method to handle POST requests
+    :return: park details as per user preferences.
+    """
+    showMessage = False
     final_parks = []
     user_obj = {}
     if request.method == 'POST':
@@ -78,7 +104,7 @@ def index():
         parks = get_locations()
 
         # get user data from request object
-        latitude, longitude, radius, weather, userDate, user_obj = get_request_data(request)
+        latitude, longitude, radius, weather, user_obj = get_request_data(request)
 
         # get probable locations
         # probable_locations = parks
@@ -89,15 +115,12 @@ def index():
             if within_range:
                 probable_locations.append(park)
 
-        # sort based on distance
-        probable_locations = sorted(probable_locations, key=lambda i: i['distance'])
+
 
         # filter based on weather and date.
-
-        # number of days from today.
-        forDate = datetime.fromisoformat(userDate).date()
-
         for park in probable_locations:
+
+            # generate parameters for the request
             param_dict['lat'] = float(park['lat'])
             param_dict['lon'] = float(park['lng'])
             param_dict['exclude'] = 'current,minutely,hourly,alerts'
@@ -110,20 +133,25 @@ def index():
                     park['lat'] = data['lat']
                     park['lon'] = data['lon']
 
+                    # segregate based on favourite weather
                     for day_info in data['daily']:
-                        respDate = datetime.fromtimestamp(day_info['dt']).date()
-                        if respDate == forDate:
-                            if day_info['weather'][0]['main'] == user_obj['favWeather']:
-                                park['mainWeather'] = day_info['weather'][0]['main']
-                                park['desc'] = day_info['weather'][0]['description']
-                                park['temp_day'] = day_info['temp']['day']
-                                park['temp_night'] = day_info['temp']['night']
-                                park['feels_day'] = day_info['feels_like']['day']
-                                park['feels_night'] = day_info['feels_like']['night']
+                        if day_info['weather'][0]['main'] == user_obj['favWeather']:
+                            park['mainWeather'] = day_info['weather'][0]['main']
+                            park['desc'] = day_info['weather'][0]['description']
+                            park['temp_day'] = day_info['temp']['day']
+                            park['temp_night'] = day_info['temp']['night']
+                            park['feels_day'] = day_info['feels_like']['day']
+                            park['feels_night'] = day_info['feels_like']['night']
+                            park['idate'] = date.fromtimestamp(day_info['dt']).strftime("%A %d. %B %Y")
 
-                                final_parks.append(park)
+                            final_parks.append(copy.deepcopy(park))
+
 
             except:
                 print('error happened')
+
+                # sort based on distance
+        final_parks = sorted(final_parks, key=lambda i: (datetime.strptime(i['idate'], "%A %d. %B %Y"), i['distance']))
+
     return render_template('mainPage/index.html', locations=final_parks, showMessage=showMessage, userData=user_obj,
-                           todays_date=todays_date)
+                               todays_date=todays_date)

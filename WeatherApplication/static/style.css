@@ -35,3 +35,6 @@ a.external[target="_blank"]::after {
     padding: 10px;
 }
 
+.table-cell{
+    float:left;
+}
